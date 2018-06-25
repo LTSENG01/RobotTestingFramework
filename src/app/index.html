@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Robot Testing System</title>
+    <script src="/jquery" type="text/javascript"></script>
+</head>
+<body>
+
+<h1>Robot Testing System Interface</h1>
+<div id="status">
+    Testing in Progress. Refresh page to see current results. (Tests Done) (Select Tests and Hit 'Run Tests')
+</div>
+
+<br>
+
+<button id="run-tests">Run Tests</button>
+
+<div id="static">
+    <h3>Static</h3>
+    <table border="1px black solid">
+        <thead>
+            <tr>
+                <th>Run Test?</th>
+                <th>Name</th>
+                <th>Pass</th>
+                <th>Value</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody id="static-data">
+
+        </tbody>
+    </table>
+</div>
+
+<div id="dynamic">
+    <h3>Dynamic</h3>
+    <table border="1px black solid">
+        <thead>
+        <tr>
+            <th>Run Test?</th>
+            <th>Name</th>
+            <th>Pass</th>
+            <th>Value</th>
+            <th>Time</th>
+        </tr>
+        </thead>
+        <tbody id="dynamic-data">
+
+        </tbody>
+    </table>
+</div>
+
+<div id="controls">
+    <h3>Controls</h3>
+    <table border="1px black solid">
+        <thead>
+        <tr>
+            <th>Run Test?</th>
+            <th>Name</th>
+            <th>Pass</th>
+            <th>Value</th>
+            <th>Time</th>
+        </tr>
+        </thead>
+        <tbody id="controls-data">
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(() => {
+        console.log("Ready");
+
+        $.ajax("/update").done((data) => {
+            parseTestData(data);
+        }).fail(() => {
+            alert("Error getting data!");
+        });
+
+    });
+
+    function parseTestData(data) {
+
+        $.each(data.static, (item, value) => {
+            console.log(value);
+            $('#static-data').append(
+                "<tr>" +
+                `<td><input type='checkbox' name=${value.name} ${value.test ? 'checked' : ''}></td>` +
+                `<td>${value.name != null ? value.name : ''}</td>` +
+                `<td>${value.pass === true ? 'OK' : ''} ${value.pass === false ? 'FAIL' : ''}</td>` +
+                `<td>${value.value != null ? value.value : ''}</td>` +
+                `<td>${value.time != null ? value.time : ''}</td>` +
+                "</tr>"
+            );
+        });
+
+        $.each(data.dynamic, (item, value) => {
+            console.log(value);
+            $('#dynamic-data').append(
+                "<tr>" +
+                `<td><input type='checkbox' name=${value.name} ${value.test ? 'checked' : ''}></td>` +
+                `<td>${value.name != null ? value.name : ''}</td>` +
+                `<td>${value.pass === true ? 'OK' : ''} ${value.pass === false ? 'FAIL' : ''}</td>` +
+                `<td>${value.value != null ? value.value : ''}</td>` +
+                `<td>${value.time != null ? value.time : ''}</td>` +
+                "</tr>"
+            );
+        });
+
+        $.each(data.controls, (item, value) => {
+            console.log(value);
+            $('#controls-data').append(
+                "<tr>" +
+                `<td><input type='checkbox' name=${value.name} ${value.test ? 'checked' : ''}></td>` +
+                `<td>${value.name != null ? value.name : ''}</td>` +
+                `<td>${value.pass === true ? 'OK' : ''} ${value.pass === false ? 'FAIL' : ''}</td>` +
+                `<td>${value.value != null ? value.value : ''}</td>` +
+                `<td>${value.time != null ? value.time : ''}</td>` +
+                "</tr>"
+            );
+        });
+    }
+
+</script>
+
+</body>
+</html>
