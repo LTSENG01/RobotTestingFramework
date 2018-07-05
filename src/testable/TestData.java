@@ -1,15 +1,24 @@
 package testable;
 
+/**
+ * A data structure to represent the result of a test
+ */
 public class TestData {
 
-    private boolean pass;
-    private double value;
-    private double timeToComplete;
+    private String name;
+    private Boolean pass;
+    private Double value;
+    private Double timeToComplete;
 
-    public TestData(boolean pass, double value, double timeToComplete) {
+    public TestData(String name, boolean pass, double value, double timeToComplete) {
+        this.name = name;
         this.pass = pass;
         this.value = value;
         this.timeToComplete = timeToComplete;
+    }
+
+    public TestData(String name) {
+        this.name = name;
     }
 
     public boolean isPassed() {
@@ -24,4 +33,7 @@ public class TestData {
         return timeToComplete;
     }
 
+    public String getName() {
+        return name;
+    }
 }

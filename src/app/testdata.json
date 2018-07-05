@@ -1,13 +1,1 @@
-{
-  "static": [
-
-  ],
-
-  "dynamic": [
-
-  ],
-
-  "controls": [
-
-  ]
-}
+{ "static": [{"name":"ExampleObjectB-Temperature"},{"name":"ExampleObject-Temperature"}], "dynamic": [], "controls": []}

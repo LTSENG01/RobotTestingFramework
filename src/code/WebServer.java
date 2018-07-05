@@ -80,7 +80,7 @@ public class WebServer {
 
             File file = new File(
                     getClass()
-                            .getResource("/app/testdata_example.json")
+                            .getResource("/app/testdata.json")
                             .getFile())
                     .getCanonicalFile();
 

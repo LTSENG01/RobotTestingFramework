@@ -7,7 +7,7 @@ public class ExampleObject implements StaticTestable, DynamicTestable, ControlsT
     private final int temperature = 10;
 
     public ExampleObject() {
-        TestManager.registerTestable("ExampleObject - Temperature", this);
+        TestManager.registerTestable("ExampleObject-Temperature", this);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class ExampleObject implements StaticTestable, DynamicTestable, ControlsT
 
     @Override
     public TestData staticTest() {
-        return new TestData(temperature > 5, temperature, 0.5);
+        return new TestData("ExampleObject-Temperature", temperature > 5, temperature, 0.5);
     }
 
 }
