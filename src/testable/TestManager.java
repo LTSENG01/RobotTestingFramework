@@ -69,14 +69,20 @@ public class TestManager {
 
     }
 
-    public static void runTests(String[][] testableNames) {
-        // 2D array format [3][x]
-        //
-        // [0] Static [3]: {"Battery", "Temperature", "Connection"}
-        // [1] Dynamic [2]: {"Motor - FL", "Motor - BL"}
-        // [2] Controls [3]: {"A", "B", "LT"}
+    public static void runTests(String testableNames) {
+        // Json array of names, comma delimited --> String[]
+        Gson gson = new Gson();
+        String[] testNames = gson.fromJson(testableNames, String[].class);
 
-        // Lookup the testable associated with the string
+        for (String test : testNames) {
+            System.out.println("Deserialized: " + test);
+        }
+
+        // Lookup the testable associated with the string (edit Gson/JSON in a friendly way?)
+
+        // Update the testable's run values in testdata.json
+
+        // trigger update?
 
     }
 

@@ -4,12 +4,13 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import testable.TestManager;
 
 import java.io.*;
 import java.net.InetSocketAddress;
 
 /**
- * Note: HTTP servers should NOT be used on FRC robots. Use NetworkTables on the robot and client laptop.
+ * Note: HTTP servers should NOT (debatable) be used on FRC robots. Use NetworkTables on the robot and client laptop.
  */
 
 public class WebServer {
@@ -80,7 +81,7 @@ public class WebServer {
 
             File file = new File(
                     getClass()
-                            .getResource("/app/testdata.json")
+                            .getResource("/app/testdata_example.json")
                             .getFile())
                     .getCanonicalFile();
 
@@ -90,6 +91,25 @@ public class WebServer {
             FileInputStream fs = new FileInputStream(file);
             os.write(fs.readAllBytes());
             fs.close();
+            os.close();
+
+        }
+    }
+
+    static class RunHandler implements HttpHandler {
+
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            InputStream is = exchange.getRequestBody();
+            String testNames = new String(is.readAllBytes());
+            is.close();
+
+            System.out.println(testNames);
+
+            TestManager.runTests(testNames);
+
+            exchange.sendResponseHeaders(200, 0);
+            OutputStream os = exchange.getResponseBody();
             os.close();
 
         }
@@ -105,6 +125,7 @@ public class WebServer {
             server.createContext("/", new MainHandler());
             server.createContext("/jquery", new JqueryHandler());
             server.createContext("/update", new UpdateHandler());
+            server.createContext("/run", new RunHandler());
             server.setExecutor(null); // creates a default executor
             server.start();
 
