@@ -71,6 +71,16 @@ public class WebServer {
 
     static class UpdateHandler implements HttpHandler {
 
+        /*
+
+        TODO: PROBLEM
+
+        When testdata.json changes, this function still serves the original file contents.
+        Somehow I need to change the file handler after each edit to the file or restart the WebServer.
+
+         */
+
+
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             InputStream is = exchange.getRequestBody();
@@ -81,7 +91,7 @@ public class WebServer {
 
             File file = new File(
                     getClass()
-                            .getResource("/app/testdata_example.json")
+                            .getResource("/app/testdata.json")
                             .getFile())
                     .getCanonicalFile();
 
@@ -106,7 +116,7 @@ public class WebServer {
 
             System.out.println(testNames);
 
-            TestManager.runTests(testNames);
+            TestManager.prepareToRunTests(testNames);
 
             exchange.sendResponseHeaders(200, 0);
             OutputStream os = exchange.getResponseBody();

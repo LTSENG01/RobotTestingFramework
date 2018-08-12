@@ -89,17 +89,25 @@
 
             // Find all tests that are selected to run
 
-            let testsToRun = [];
+            let testsToRun = [[], [], []];
 
-            $("input:checked").each((index, element) => {
-                testsToRun.push(element.name);
+            $("input:checked").filter( $(".static-item") ).each((index, element) => {
+                testsToRun[0].push(element.name);
+            });
+
+            $("input:checked").filter( $(".dynamic-item") ).each((index, element) => {
+                testsToRun[1].push(element.name);
+            });
+
+            $("input:checked").filter( $(".controls-item") ).each((index, element) => {
+                testsToRun[2].push(element.name);
             });
 
             console.log(testsToRun);
 
-            // Send array back to the WebServer
+            // Send array back to the WebServer/robot
 
-            if (testsToRun.length > 0) {
+            if (testsToRun[0].length > 0 || testsToRun[1].length > 0 || testsToRun[2].length > 0) {
                 $.post("/run", JSON.stringify(testsToRun)).done((data) => {
                     console.log("Successful");
                     $("#status").text("Tests in Progress");
@@ -120,7 +128,7 @@
             console.log(value);
             $('#static-data').append(
                 "<tr>" +
-                `<td><input type='checkbox' name=${value.name} ${value.test || value.test == null ? 'checked' : ''}></td>` +
+                `<td><input class='static-item' type='checkbox' name=${value.name} ${value.test || value.test == null ? 'checked' : ''}></td>` +
                 `<td>${value.name != null ? value.name : ''}</td>` +
                 `<td>${value.pass === true ? 'OK' : ''}${value.pass === false ? 'FAIL' : ''}</td>` +
                 `<td>${value.value != null ? value.value : ''}</td>` +
@@ -133,7 +141,7 @@
             console.log(value);
             $('#dynamic-data').append(
                 "<tr>" +
-                `<td><input type='checkbox' name=${value.name} ${value.test || value.test == null ? 'checked' : ''}></td>` +
+                `<td><input class='dynamic-item' type='checkbox' name=${value.name} ${value.test || value.test == null ? 'checked' : ''}></td>` +
                 `<td>${value.name != null ? value.name : ''}</td>` +
                 `<td>${value.pass === true ? 'OK' : ''}${value.pass === false ? 'FAIL' : ''}</td>` +
                 `<td>${value.value != null ? value.value : ''}</td>` +
@@ -146,7 +154,7 @@
             console.log(value);
             $('#controls-data').append(
                 "<tr>" +
-                `<td><input type='checkbox' name=${value.name} ${value.test || value.test == null ? 'checked' : ''}></td>` +
+                `<td><input class='controls-item' type='checkbox' name=${value.name} ${value.test || value.test == null ? 'checked' : ''}></td>` +
                 `<td>${value.name != null ? value.name : ''}</td>` +
                 `<td>${value.pass === true ? 'OK' : ''}${value.pass === false ? 'FAIL' : ''}</td>` +
                 `<td>${value.value != null ? value.value : ''}</td>` +

@@ -6,15 +6,16 @@ package testable;
 public class TestData {
 
     private String name;
+    private Boolean test;
     private Boolean pass;
     private Double value;
-    private Double timeToComplete;
+    private Double time = 0.0;
 
-    public TestData(String name, boolean pass, double value, double timeToComplete) {
+    public TestData(String name, boolean pass, double value, double time) {
         this.name = name;
         this.pass = pass;
         this.value = value;
-        this.timeToComplete = timeToComplete;
+        this.time = time;
     }
 
     public TestData(String name) {
@@ -30,10 +31,19 @@ public class TestData {
     }
 
     public double getTimeToComplete() {
-        return timeToComplete;
+        return time;
     }
 
     public String getName() {
         return name;
     }
+
+    public Boolean getTest() {
+        return test;
+    }
+
+    public void setTest(Boolean test) {
+        this.test = test;
+    }
+
 }

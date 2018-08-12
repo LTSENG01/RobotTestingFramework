@@ -14,6 +14,7 @@ public class Main {
         exampleObject = new ExampleObject();
         exampleObjectB = new ExampleObjectB();
 
+        // Throw in TestInit()
         TestManager.readyForTesting();
 
     }
