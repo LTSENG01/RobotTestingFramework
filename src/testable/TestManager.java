@@ -1,5 +1,6 @@
 package testable;
 
+import code.WebServer;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -10,6 +11,9 @@ import java.util.HashMap;
 public class TestManager {
 
     private static boolean readyToTest = false;
+    private static boolean currentlyTesting = false;
+
+    private static Thread testingThread;
 
     static {
         staticTestables = new HashMap<>();
@@ -23,12 +27,7 @@ public class TestManager {
     private static HashMap<ControlsTestable, TestData> controlsTestables;
 
     public static void readyForTesting() {
-
         displayTests();
-
-        // Do something - update #status to READY
-
-
     }
 
     private static void displayTests() {
@@ -44,11 +43,8 @@ public class TestManager {
         try {
             File file = new File("src/app/testdata.json");
 
-            if (file.exists()) {
-                System.out.println("File already exists");
-                if (file.delete())
-                    System.out.println("Successful deletion");
-            }
+            if (file.exists())
+                file.delete();
 
             FileWriter fw = new FileWriter(file, false);
             fw.write("{ \"static\": ");
@@ -60,18 +56,19 @@ public class TestManager {
             fw.write("}");
             fw.close();
 
-            if (file.renameTo(new File("src/app/testdata.json")))
-                System.out.println("Successful creation of testdata.json");
+            file.renameTo(new File("src/app/testdata.json"));
 
         } catch (IOException e) {
             System.err.println("Error creating/saving testdata.json");
             e.printStackTrace();
         }
 
-
     }
 
     public static void prepareToRunTests(String testableNames) {
+
+        if (currentlyTesting)
+            return;
 
         // Json 2D array of names, comma delimited --> String[][]
         Gson gson = new Gson();
@@ -115,40 +112,68 @@ public class TestManager {
         displayTests();
         readyToTest = true;
 
+        // TestPeriodic (doesn't need the extra thread?)
         new Thread(TestManager::runTests).start();
 
     }
 
     public static void runTests() {
-        if (!readyToTest) {
+
+        if (!readyToTest)
             return;
-        }
 
-        staticTestables.forEach((test, data) -> {
-            if (data.getTest() && data.getTimeToComplete() == 0.0) {
-                staticTestables.replace(test, test.staticTest());
-            }
-            displayTests();
+        currentlyTesting = true;
+
+        testingThread = new Thread(() -> {
+
+            staticTestables.forEach((test, data) -> {
+                if (!testingThread.isInterrupted()) {
+                    if (data.getTest() && data.getTimeToComplete() == 0.0) {
+                        try {
+                            staticTestables.replace(test, test.staticTest());
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+                    displayTests();
+                }
+
+            });
+
+            dynamicTestables.forEach((test, data) -> {
+                if (!testingThread.isInterrupted()) {
+                    if (data.getTest() && data.getTimeToComplete() == 0.0) {
+                        try {
+                            dynamicTestables.replace(test, test.dynamicTest());
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+                    displayTests();
+                }
+
+            });
+
+            controlsTestables.forEach((test, data) -> {
+                if (!testingThread.isInterrupted()) {
+                    if (data.getTest() && data.getTimeToComplete() == 0.0) {
+                        try {
+                            controlsTestables.replace(test, test.controlsTest());
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+                    displayTests();
+                }
+
+            });
+
+            System.out.println("Testing has finished!");
+
         });
 
-        dynamicTestables.forEach((test, data) -> {
-            if (data.getTest() && data.getTimeToComplete() == 0.0) {
-                dynamicTestables.replace(test, test.dynamicTest());
-            }
-            displayTests();
-        });
+        testingThread.start();
 
-        controlsTestables.forEach((test, data) -> {
-            if (data.getTest() && data.getTimeToComplete() == 0.0) {
-                controlsTestables.replace(test, test.controlsTest());
-            }
-            displayTests();
-        });
-
-    }
-
-    private static void publishResult(String name, TestData testData) {
-        // Do something
     }
 
     public static void registerTestable(String name, Testable testable) {
@@ -158,6 +183,13 @@ public class TestManager {
             dynamicTestables.put((DynamicTestable) testable, new TestData(name));
         else if (testable instanceof ControlsTestable)
             controlsTestables.put((ControlsTestable) testable, new TestData(name));
+    }
+
+    public static void stopTesting() {
+        System.out.println("Stopping testing!");
+        testingThread.interrupt();
+        currentlyTesting = false;
+        // WebServer.stop();
     }
 
 }

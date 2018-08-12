@@ -4,7 +4,7 @@ import testable.*;
 
 public class ExampleObjectB implements StaticTestable, DynamicTestable, ControlsTestable {
 
-    private final int temperature = 10;
+    private final int temperature = 2;
 
     // No spaces allowed in the name
     public ExampleObjectB() {
@@ -22,8 +22,10 @@ public class ExampleObjectB implements StaticTestable, DynamicTestable, Controls
     }
 
     @Override
-    public TestData staticTest() {
-        return new TestData("ExampleObjectB-Temperature", temperature > 5, temperature, 0.5);
+    public TestData staticTest() throws InterruptedException {
+        long startTime = System.currentTimeMillis();
+        Thread.sleep(1000);
+        return new TestData("ExampleObjectB-Temperature", temperature > 5, temperature, (System.currentTimeMillis() - startTime)/1000.0);
     }
 
 }

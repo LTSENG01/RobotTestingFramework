@@ -16,6 +16,7 @@
 <br>
 
 <button id="run-tests">Run Tests</button>
+<button id="stop-tests">Stop Tests</button>
 
 <div id="static">
     <h3>Static</h3>
@@ -110,7 +111,7 @@
             if (testsToRun[0].length > 0 || testsToRun[1].length > 0 || testsToRun[2].length > 0) {
                 $.post("/run", JSON.stringify(testsToRun)).done((data) => {
                     console.log("Successful");
-                    $("#status").text("Tests in Progress");
+                    $("#status").text("Tests in Progress. Refresh the page to get updated results.");
                 }).fail(() => {
                     alert("Error sending data back to robot!");
                 })
@@ -118,6 +119,14 @@
                 alert("No tests were selected!");
             }
 
+        });
+
+        $("#stop-tests").click(() => {
+            $.ajax("/stop").done((data) => {
+                $("#status").text("Tests stopping!");
+            }).fail(() => {
+                alert("Error stopping tests!");
+            });
         });
 
     });

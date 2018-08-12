@@ -15,6 +15,8 @@ import java.net.InetSocketAddress;
 
 public class WebServer {
 
+    private static HttpServer server;
+
     static class MainHandler implements HttpHandler {
 
         @Override
@@ -71,16 +73,6 @@ public class WebServer {
 
     static class UpdateHandler implements HttpHandler {
 
-        /*
-
-        TODO: PROBLEM
-
-        When testdata.json changes, this function still serves the original file contents.
-        Somehow I need to change the file handler after each edit to the file or restart the WebServer.
-
-         */
-
-
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             InputStream is = exchange.getRequestBody();
@@ -89,11 +81,7 @@ public class WebServer {
             Headers h = exchange.getResponseHeaders();
             h.set("Content-Type", "application/json");
 
-            File file = new File(
-                    getClass()
-                            .getResource("/app/testdata.json")
-                            .getFile())
-                    .getCanonicalFile();
+            File file = new File("src/app/testdata.json");
 
             exchange.sendResponseHeaders(200, file.length());
 
@@ -114,9 +102,23 @@ public class WebServer {
             String testNames = new String(is.readAllBytes());
             is.close();
 
-            System.out.println(testNames);
-
             TestManager.prepareToRunTests(testNames);
+
+            exchange.sendResponseHeaders(200, 0);
+            OutputStream os = exchange.getResponseBody();
+            os.close();
+
+        }
+    }
+
+    static class StopHandler implements HttpHandler {
+
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            InputStream is = exchange.getRequestBody();
+            is.close();
+
+            new Thread(TestManager::stopTesting).start();
 
             exchange.sendResponseHeaders(200, 0);
             OutputStream os = exchange.getResponseBody();
@@ -127,8 +129,6 @@ public class WebServer {
 
     public static void start() {
 
-        HttpServer server;
-
         try {
             server = HttpServer.create(new InetSocketAddress(8000),0);
 
@@ -136,10 +136,23 @@ public class WebServer {
             server.createContext("/jquery", new JqueryHandler());
             server.createContext("/update", new UpdateHandler());
             server.createContext("/run", new RunHandler());
+            server.createContext("/stop", new StopHandler());
             server.setExecutor(null); // creates a default executor
             server.start();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
+            System.out.println("Testing server couldn't be started!");
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void stop() {
+
+        try {
+            server.stop(0);
+        } catch (Exception e) {
+            System.out.println("Testing server couldn't be stopped!");
             e.printStackTrace();
         }
 

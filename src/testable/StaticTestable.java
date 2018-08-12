@@ -2,6 +2,6 @@ package testable;
 
 public interface StaticTestable extends Testable {
 
-    TestData staticTest();
+    TestData staticTest() throws InterruptedException;
 
 }

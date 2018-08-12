@@ -2,6 +2,6 @@ package testable;
 
 public interface ControlsTestable extends Testable {
 
-    TestData controlsTest();
+    TestData controlsTest() throws InterruptedException;
 
 }

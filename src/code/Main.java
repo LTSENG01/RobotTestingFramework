@@ -17,6 +17,8 @@ public class Main {
         // Throw in TestInit()
         TestManager.readyForTesting();
 
+        // Throw in disabled?
+        // TestManager.stopTesting();
     }
 
 }
