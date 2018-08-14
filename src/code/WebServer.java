@@ -27,11 +27,7 @@ public class WebServer {
             Headers h = exchange.getResponseHeaders();
             h.set("Content-Type", "text/html");
 
-            File file = new File(
-                    getClass()
-                            .getResource("/app/index.html")
-                            .getFile())
-                    .getCanonicalFile();
+            File file = new File("src/app/index.html");
 
             exchange.sendResponseHeaders(200, file.length());
 
@@ -54,11 +50,7 @@ public class WebServer {
             Headers h = exchange.getResponseHeaders();
             h.set("Content-Type", "text/javascript");
 
-            File file = new File(
-                    getClass()
-                            .getResource("/app/jquery.js")
-                            .getFile())
-                    .getCanonicalFile();
+            File file = new File("src/app/jquery.js");
 
             exchange.sendResponseHeaders(200, file.length());
 

@@ -1,1 +1,1 @@
-{ "static": [{"name":"ExampleObjectB-Temperature","test":true,"pass":false,"value":2.0,"time":1.003},{"name":"ExampleObject-Temperature","test":true,"pass":true,"value":10.0,"time":2.004}], "dynamic": [], "controls": []}
+{ "static": [{"name":"ExampleObjectB-Temperature","pass":false,"value":2.0,"time":1.0},{"name":"ExampleObject-Temperature","pass":true,"value":10.0,"time":2.004}], "dynamic": [], "controls": []}
