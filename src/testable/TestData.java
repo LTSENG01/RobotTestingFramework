@@ -11,11 +11,10 @@ public class TestData {
     private Double value;
     private Double time = 0.0;
 
-    public TestData(String name, boolean pass, double value, double time) {
+    public TestData(String name, boolean pass, double value) {
         this.name = name;
         this.pass = pass;
         this.value = value;
-        this.time = time;
     }
 
     public TestData(String name) {
@@ -32,6 +31,10 @@ public class TestData {
 
     public double getTimeToComplete() {
         return time;
+    }
+
+    public void setTimeToComplete(double time) {
+        this.time = time;
     }
 
     public String getName() {

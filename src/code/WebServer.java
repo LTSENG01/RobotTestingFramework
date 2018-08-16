@@ -133,7 +133,7 @@ public class WebServer {
             server.start();
 
         } catch (Exception e) {
-            System.out.println("Testing server couldn't be started!");
+            System.out.println("Testing server couldn't be started! Skipping testing!");
             e.printStackTrace();
         }
 

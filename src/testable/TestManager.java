@@ -7,10 +7,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Timer;
 
 public class TestManager {
 
-    private static boolean readyToTest = false;
+    private static volatile boolean readyToTest = false;
     private static boolean currentlyTesting = false;
 
     private static Thread testingThread;
@@ -126,11 +127,24 @@ public class TestManager {
 
         testingThread = new Thread(() -> {
 
+            /*
+
+            Uses the Java SE System class to keep track of the time that each test takes.
+            Ideally, one would use the FPGA timer in the RoboRIO, but I want to keep this framework
+            independent of WPILib. If someone can implement it so that either one can be used depending on the
+            available hardware, go for it.
+
+             */
+
             staticTestables.forEach((test, data) -> {
                 if (!testingThread.isInterrupted()) {
                     if (data.getTest() && data.getTimeToComplete() == 0.0) {
                         try {
-                            staticTestables.replace(test, test.staticTest());
+                            double startTime = System.currentTimeMillis();
+                            TestData result = test.staticTest();
+                            Thread.sleep(20);
+                            result.setTimeToComplete(((System.currentTimeMillis() - startTime)/1000.0));
+                            staticTestables.replace(test, result);
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt();
                         }
@@ -144,7 +158,11 @@ public class TestManager {
                 if (!testingThread.isInterrupted()) {
                     if (data.getTest() && data.getTimeToComplete() == 0.0) {
                         try {
-                            dynamicTestables.replace(test, test.dynamicTest());
+                            double startTime = System.currentTimeMillis();
+                            TestData result = test.dynamicTest();
+                            Thread.sleep(20);
+                            result.setTimeToComplete(((System.currentTimeMillis() - startTime)/1000.0));
+                            dynamicTestables.replace(test, result);
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt();
                         }
@@ -158,7 +176,11 @@ public class TestManager {
                 if (!testingThread.isInterrupted()) {
                     if (data.getTest() && data.getTimeToComplete() == 0.0) {
                         try {
-                            controlsTestables.replace(test, test.controlsTest());
+                            double startTime = System.currentTimeMillis();
+                            TestData result = test.controlsTest();
+                            Thread.sleep(20);
+                            result.setTimeToComplete(((System.currentTimeMillis() - startTime)/1000.0));
+                            controlsTestables.replace(test, result);
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt();
                         }
@@ -189,7 +211,7 @@ public class TestManager {
         System.out.println("Stopping testing!");
         testingThread.interrupt();
         currentlyTesting = false;
-        // WebServer.stop();
+        // WebServer.stop(); // move to robotDisabled or autoInit
     }
 
 }

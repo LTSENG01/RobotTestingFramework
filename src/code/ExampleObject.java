@@ -24,9 +24,7 @@ public class ExampleObject implements StaticTestable, DynamicTestable, ControlsT
 
     @Override
     public TestData staticTest() throws InterruptedException {
-        long startTime = System.currentTimeMillis();
-        Thread.sleep(2000);
-        return new TestData("ExampleObject-Temperature", temperature > 5, temperature, (System.currentTimeMillis() - startTime)/1000.0);
+        return new TestData("ExampleObject-Temperature", temperature > 5, temperature);
     }
 
 }
