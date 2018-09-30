@@ -1,6 +1,7 @@
-package code;
+package larrytseng.testableframework.code;
 
-import testable.*;
+import larrytseng.testableframework.testables.*;
+import larrytseng.testableframework.testables.TestManager.TestableTypes;
 
 public class ExampleObjectB implements StaticTestable, DynamicTestable, ControlsTestable {
 
@@ -8,7 +9,7 @@ public class ExampleObjectB implements StaticTestable, DynamicTestable, Controls
 
     // No spaces allowed in the name
     public ExampleObjectB() {
-        TestManager.registerTestable("ExampleObjectB-Temperature", this);
+        TestManager.registerTestable("ExampleObjectB-Temperature", this, TestableTypes.STATIC);
     }
 
     @Override

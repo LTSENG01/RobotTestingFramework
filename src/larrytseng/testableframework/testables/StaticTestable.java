@@ -1,4 +1,4 @@
-package testable;
+package larrytseng.testableframework.testables;
 
 public interface StaticTestable extends Testable {
 

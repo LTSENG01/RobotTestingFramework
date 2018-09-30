@@ -1,0 +1,1 @@
+{ "static": [{"name":"ExampleObject-Temperature","pass":true,"value":10.0,"time":0.024},{"name":"ExampleObjectB-Temperature","pass":false,"value":2.0,"time":0.024}], "dynamic": [], "controls": [{"name":"ExampleObject-ButtonA","pass":true,"value":1.0,"time":1.023}]}

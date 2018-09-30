@@ -1,4 +1,4 @@
-package testable;
+package larrytseng.testableframework.testables;
 
 /**
  * A data structure to represent the result of a test

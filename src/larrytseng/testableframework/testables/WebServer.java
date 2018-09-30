@@ -1,17 +1,14 @@
-package code;
+package larrytseng.testableframework.testables;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import testable.TestManager;
+import larrytseng.testableframework.testables.TestManager;
 
 import java.io.*;
 import java.net.InetSocketAddress;
-
-/**
- * Note: HTTP servers should NOT (debatable) be used on FRC robots. Use NetworkTables on the robot and client laptop.
- */
+import java.nio.file.Files;
 
 public class WebServer {
 
@@ -32,9 +29,8 @@ public class WebServer {
             exchange.sendResponseHeaders(200, file.length());
 
             OutputStream os = exchange.getResponseBody();
-            FileInputStream fs = new FileInputStream(file);
-            os.write(fs.readAllBytes());
-            fs.close();
+            Files.copy(file.toPath(), os);
+
             os.close();
 
         }
@@ -55,9 +51,8 @@ public class WebServer {
             exchange.sendResponseHeaders(200, file.length());
 
             OutputStream os = exchange.getResponseBody();
-            FileInputStream fs = new FileInputStream(file);
-            os.write(fs.readAllBytes());
-            fs.close();
+            Files.copy(file.toPath(), os);
+
             os.close();
 
         }
@@ -78,9 +73,8 @@ public class WebServer {
             exchange.sendResponseHeaders(200, file.length());
 
             OutputStream os = exchange.getResponseBody();
-            FileInputStream fs = new FileInputStream(file);
-            os.write(fs.readAllBytes());
-            fs.close();
+            Files.copy(file.toPath(), os);
+
             os.close();
 
         }
@@ -91,8 +85,17 @@ public class WebServer {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             InputStream is = exchange.getRequestBody();
-            String testNames = new String(is.readAllBytes());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            StringBuilder stringBuilder = new StringBuilder();
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+
+            String testNames = stringBuilder.toString();
             is.close();
+            reader.close();
 
             TestManager.prepareToRunTests(testNames);
 

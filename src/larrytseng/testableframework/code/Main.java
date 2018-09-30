@@ -1,6 +1,7 @@
-package code;
+package larrytseng.testableframework.code;
 
-import testable.TestManager;
+import larrytseng.testableframework.testables.TestManager;
+import larrytseng.testableframework.testables.WebServer;
 
 public class Main {
 

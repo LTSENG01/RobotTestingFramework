@@ -1,13 +1,11 @@
-package testable;
+package larrytseng.testableframework.testables;
 
-import code.WebServer;
 import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Timer;
 
 public class TestManager {
 
@@ -198,12 +196,16 @@ public class TestManager {
 
     }
 
-    public static void registerTestable(String name, Testable testable) {
-        if (testable instanceof StaticTestable)
+    public enum TestableTypes {
+        STATIC, DYNAMIC, CONTROLS
+    }
+
+    public static void registerTestable(String name, Testable testable, TestableTypes type) {
+        if (type == TestableTypes.STATIC)
             staticTestables.put((StaticTestable) testable, new TestData(name));
-        else if (testable instanceof DynamicTestable)
+        else if (type == TestableTypes.DYNAMIC)
             dynamicTestables.put((DynamicTestable) testable, new TestData(name));
-        else if (testable instanceof ControlsTestable)
+        else if (type == TestableTypes.CONTROLS)
             controlsTestables.put((ControlsTestable) testable, new TestData(name));
     }
 
