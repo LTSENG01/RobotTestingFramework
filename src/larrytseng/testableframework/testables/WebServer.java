@@ -4,7 +4,6 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import larrytseng.testableframework.testables.TestManager;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -24,7 +23,7 @@ public class WebServer {
             Headers h = exchange.getResponseHeaders();
             h.set("Content-Type", "text/html");
 
-            File file = new File("src/app/index.html");
+            File file = new File(TestManager.projRootPath + "app/index.html");
 
             exchange.sendResponseHeaders(200, file.length());
 
@@ -46,7 +45,7 @@ public class WebServer {
             Headers h = exchange.getResponseHeaders();
             h.set("Content-Type", "text/javascript");
 
-            File file = new File("src/app/jquery.js");
+            File file = new File(TestManager.projRootPath + "app/jquery.js");
 
             exchange.sendResponseHeaders(200, file.length());
 
@@ -68,7 +67,7 @@ public class WebServer {
             Headers h = exchange.getResponseHeaders();
             h.set("Content-Type", "application/json");
 
-            File file = new File("src/app/testdata.json");
+            File file = new File(TestManager.testDataPath);
 
             exchange.sendResponseHeaders(200, file.length());
 

@@ -11,6 +11,8 @@ public class TestManager {
 
     private static volatile boolean readyToTest = false;
     private static boolean currentlyTesting = false;
+    public static String projRootPath = "";
+    public static String testDataPath = "";    // "src/larrytseng/testableframework/app/testdata.json"
 
     private static Thread testingThread;
 
@@ -25,7 +27,10 @@ public class TestManager {
     private static HashMap<DynamicTestable, TestData> dynamicTestables;
     private static HashMap<ControlsTestable, TestData> controlsTestables;
 
-    public static void readyForTesting() {
+    public static void readyForTesting(String rootDirPath) {
+        projRootPath = rootDirPath;
+        testDataPath = rootDirPath + "app/testdata.json";
+        WebServer.start();
         displayTests();
     }
 
@@ -40,7 +45,7 @@ public class TestManager {
         System.out.println(statics + dynamics + controls);
 
         try {
-            File file = new File("src/app/testdata.json");
+            File file = new File(testDataPath);
 
             if (file.exists())
                 file.delete();
@@ -55,7 +60,7 @@ public class TestManager {
             fw.write("}");
             fw.close();
 
-            file.renameTo(new File("src/app/testdata.json"));
+            file.renameTo(new File(testDataPath));
 
         } catch (IOException e) {
             System.err.println("Error creating/saving testdata.json");

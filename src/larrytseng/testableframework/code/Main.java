@@ -1,7 +1,6 @@
 package larrytseng.testableframework.code;
 
 import larrytseng.testableframework.testables.TestManager;
-import larrytseng.testableframework.testables.WebServer;
 
 public class Main {
 
@@ -10,13 +9,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        WebServer.start();
-
         exampleObject = new ExampleObject();
         exampleObjectB = new ExampleObjectB();
 
         // Throw in TestInit()
-        TestManager.readyForTesting();
+        TestManager.readyForTesting("src/larrytseng/testableframework/");
 
         // Throw in disabled?
         // TestManager.stopTesting();
