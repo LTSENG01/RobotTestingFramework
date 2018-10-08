@@ -121,7 +121,7 @@ public class WebServer {
         }
     }
 
-    public static void start() {
+    public static void start() {        // TODO: Separate thread?
 
         try {
             server = HttpServer.create(new InetSocketAddress(8000),0);
