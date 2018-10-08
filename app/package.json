@@ -1,0 +1,17 @@
+{
+  "name": "testableframework-viewer",
+  "version": "0.0.1",
+  "description": "An app to manage tests and view test results.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Larry Tseng",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^3.0.3"
+  },
+  "dependencies": {
+    "wpilib-nt-client": "^1.7.1"
+  }
+}
