@@ -3,9 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Hello</title>
+    <script>
+        require('./app.js');
+    </script>
 </head>
 <body>
 <h1>Hi there!</h1>
+
+<!-- Robot Connection -->
+<div>
+    <p>Enter the robot's IP address</p>
+    <input id="connect-address" type="text" value="roboRIO-TEAM-FRC.local">
+    <button id="connect-button">Connect</button>
+    <button id="disconnect-button">Disconnect</button>
+    <p id="robot-status">Disconnected</p>
+</div>
+
+
 We are using node <script>document.write(process.versions.node)</script>,
 Chrome <script>document.write(process.versions.chrome)</script>,
 and Electron <script>document.write(process.versions.electron)</script>.
