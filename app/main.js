@@ -1,11 +1,10 @@
-import { startClient, stopClient } from "networktables";
+const { app, BrowserWindow, ipcMain } = require('electron');
 
-const { app, BrowserWindow } = require('electron');
+/** ---- Electron Stuff ---- **/
 
 let win;    // global reference
 
-function createWindow () {
-    startClient();
+function createWindow() {
     // Create the browser window and load the index.html of the app.
     win = new BrowserWindow({width: 800, height: 600});
     win.loadFile('index.html');
@@ -15,9 +14,7 @@ app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-    stopClient();
-    // On macOS it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
+    // Do not quit if on macOS (need to Cmd + Q)
     if (process.platform !== 'darwin') {
         app.quit();
     }
@@ -29,4 +26,8 @@ app.on('activate', () => {
     if (win === null) {
         createWindow();
     }
+});
+
+ipcMain.on('console', (event, args) => {
+   console.log(args);
 });
