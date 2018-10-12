@@ -8,7 +8,7 @@ const $ = require('jquery');
 const client = new nt.Client();
 
 function startClient(address) {
-    ipcRenderer.send('console', "Starting NT client!");
+    ipcRenderer.send('console', "Connecting to the NT client!");
     client.start((isConnected, err) => {
         console.log({isConnected, err});
 

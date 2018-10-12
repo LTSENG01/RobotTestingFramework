@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hello</title>
+    <title>Robot Testing Interface</title>
     <script>
         require('./app.js');
     </script>
 </head>
 <body>
-<h1>Hi there!</h1>
+<h1>Robot Testing Interface</h1>
 
 <!-- Robot Connection -->
 <div>
@@ -19,9 +19,20 @@
     <p id="robot-status">Disconnected</p>
 </div>
 
+<!-- Tests -->
 
-We are using node <script>document.write(process.versions.node)</script>,
-Chrome <script>document.write(process.versions.chrome)</script>,
-and Electron <script>document.write(process.versions.electron)</script>.
+<!-- Table
+
+|––––––+–––––––––––+––––––––+––––––––––+––––––––|
+| Run? | Item Name | Result | Expected | Actual |
+|––––––+–––––––––––+––––––––+––––––––––+––––––––|
+| [√]  | Motor1_FL | Pass   | 10%      | 10.5%  |
+|––––––+–––––––––––+––––––––+––––––––––+––––––––|
+...
+...
+
+-->
+
+
 </body>
 </html>
