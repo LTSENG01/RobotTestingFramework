@@ -13,3 +13,8 @@ Open the `/app` folder in the Terminal and run `npm start`.
 
 ### Other
 Uses the Electron framework and `wpilib-nt-client`.
+
+
+### TODO
+
+Add license and contributions and libraries used.

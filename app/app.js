@@ -29,8 +29,34 @@ function stopClient() {
 }
 
 client.addListener((key, val) => {
-    console.log({ key, val });
+    ipcRenderer.send('console', { key, val });
 });
+
+/*
+
+Network Tables Tree Structure
+
+Root
+    - SmartDashboard
+        - ...
+    - LiveWindow
+        - ...
+    - Jetson
+        - ...
+    - Telemetry
+        - ...
+    - RobotTestingFramework
+        - status
+            - running: Boolean
+            - currentTest: ""
+            - instructions: ""
+        - availableTests: ["", "", ...]
+        - testsToRun: ["", "", ...]
+        - finishedTests
+            - test1: ["Name", "Result", "Actual", ...]
+            - ...
+
+ */
 
 /** ---- UI Elements ---- **/
 
