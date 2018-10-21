@@ -1,4 +1,4 @@
-# FRC Robot Testing Framework
+# Robot Testing Framework
 
 ### Overview
 This testing framework is designed for FIRST® Robotics Competition robots programmed in Java. It can be adapted for any other platform as long as the dependencies are included properly.
