@@ -18,18 +18,22 @@ public class TestResult {
     /**
      *
      *
-     * @param mName
-     * @param mResult
-     * @param mExpected
-     * @param mActual
-     * @param mTime
+     * @param name
+     * @param result
+     * @param expected
+     * @param actual
      */
-    public void setTestResults(String mName, String mResult, String mExpected, String mActual, Double mTime) {
-        this.mName = mName;
-        this.mResult = mResult;
-        this.mExpected = mExpected;
-        this.mActual = mActual;
-        this.mTime = mTime;
+    public TestResult setTestResults(String name, Result result, String expected, String actual) {
+        this.mName = name;
+        this.mResult = result.toString();
+        this.mExpected = expected;
+        this.mActual = actual;
+
+        return this;
+    }
+
+    public void setTestTime(Double time) {
+        this.mTime = time;
     }
 
     /**
