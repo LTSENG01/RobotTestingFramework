@@ -1,7 +1,8 @@
-package larrytseng.testableframework.code;
+package ltseng01.testableframework.code;
 
 import larrytseng.testableframework.testables.*;
-import larrytseng.testableframework.testables.TestManager.TestableTypes;
+import ltseng01.testableframework.testables.*;
+import ltseng01.testableframework.testables.TestManager.TestableTypes;
 
 public class ExampleObject implements StaticTestable, DynamicTestable, ControlsTestable {
 

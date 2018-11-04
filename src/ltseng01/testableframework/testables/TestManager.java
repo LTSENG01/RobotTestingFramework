@@ -1,6 +1,7 @@
-package larrytseng.testableframework.testables;
+package ltseng01.testableframework.testables;
 
 import com.google.gson.Gson;
+import ltseng01.testableframework.Testable;
 
 import java.io.File;
 import java.io.FileWriter;
