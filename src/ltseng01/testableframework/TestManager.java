@@ -10,12 +10,13 @@ public class TestManager {
     private static HashMap<String, TestResult> finishedTests;
 
     private static Thread testingThread;
-    // private static boolean currentlyTesting;     // Might not need this
 
     static {
         testCollection = new HashMap<>();
         testsToRun = new HashMap<>();
         finishedTests = new HashMap<>();
+
+        new NetworkTablesCommunication(false);
     }
 
     public static void registerTest(String name, Testable testObject) {

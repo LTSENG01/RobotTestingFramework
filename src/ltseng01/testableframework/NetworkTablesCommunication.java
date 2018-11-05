@@ -13,20 +13,19 @@ public class NetworkTablesCommunication {
     private static NetworkTable statusTable;
     private static NetworkTable finishedTable;
 
-    public NetworkTablesCommunication() {
-
-        // Network Tables Setup
+    public NetworkTablesCommunication(boolean onRobot) {
 
         inst = NetworkTableInstance.getDefault();
         mainTable = inst.getTable("RobotTestingFramework");
         statusTable = mainTable.getSubTable("status");
         finishedTable = mainTable.getSubTable("finishedTests");
 
-        inst.startClient("localhost");  // No need on an actual robot
+        // Start the client if not using an FRC robot
+        if (!onRobot)
+            inst.startClient("localhost");
 
-        mainTable.getEntry("availableTests").setStringArray(new String[]{"test1"});
+        mainTable.getEntry("availableTests").setStringArray(new String[]{});
         statusTable.getEntry("running").setBoolean(false);
-        finishedTable.getEntry("test1").setStringArray(new String[]{"Test1", "Result"});
 
         statusTable.getEntry("running").addListener(event -> {
             if (event.value.getBoolean()) {
