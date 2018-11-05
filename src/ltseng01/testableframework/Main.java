@@ -17,6 +17,17 @@ public class Main {
 
         TestManager.runTests();
 
+        waiter();
+    }
+
+    public static void waiter() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        waiter();
     }
 
 }

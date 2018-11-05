@@ -1,5 +1,6 @@
 package ltseng01.testableframework;
 
+import edu.wpi.first.networktables.EntryListenerFlags;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
@@ -27,15 +28,19 @@ public class NetworkTablesCommunication {
         statusTable.getEntry("running").setBoolean(false);
         finishedTable.getEntry("test1").setStringArray(new String[]{"Test1", "Result"});
 
+        statusTable.getEntry("running").addListener(event -> {
+            if (event.value.getBoolean()) {
+                TestManager.runTests();
+            } else {
+                TestManager.interruptTesting();
+            }
+        }, EntryListenerFlags.kUpdate | EntryListenerFlags.kNew);
+
     }
-
-
-    // listen to change in 'RobotTestingFramework/status/running'
-    // start or stop TestProcedures
 
     public static void publishTestInfo(String[] tests) {
         mainTable.getEntry("availableTests").setStringArray(tests);
-        mainTable.getEntry("testsToRun").setStringArray(tests);
+        mainTable.getEntry("testsToRun").setStringArray(tests);     // TODO: Remove (temp for testing)
     }
 
     public static String[] receiveTestsToRun() {
@@ -49,7 +54,7 @@ public class NetworkTablesCommunication {
     }
 
     public static void transmitInstructions(String instructions) {
-
+        statusTable.getEntry("instructions").setString(instructions);
     }
 
 }

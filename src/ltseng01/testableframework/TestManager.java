@@ -10,7 +10,7 @@ public class TestManager {
     private static HashMap<String, TestResult> finishedTests;
 
     private static Thread testingThread;
-    // private static boolean currentlyTesting;
+    // private static boolean currentlyTesting;     // Might not need this
 
     static {
         testCollection = new HashMap<>();
@@ -29,6 +29,8 @@ public class TestManager {
     }
 
     public static void runTests() {
+
+        System.out.println("Beginning to run tests!");
 
         String[] tests = NetworkTablesCommunication.receiveTestsToRun();
 
@@ -78,8 +80,10 @@ public class TestManager {
     }
 
     public static void interruptTesting() {
-        testingThread.interrupt();
-        System.out.println("Testing interrupted!");
+        if (testingThread.isAlive()) {
+            testingThread.interrupt();
+            System.out.println("Testing interrupted!");
+        }
     }
 
 
