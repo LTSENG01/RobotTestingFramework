@@ -10,7 +10,7 @@ public class TestManager {
     private static HashMap<String, TestResult> finishedTests;
 
     private static Thread testingThread;
-    private static boolean currentlyTesting;
+    // private static boolean currentlyTesting;
 
     static {
         testCollection = new HashMap<>();
@@ -23,7 +23,8 @@ public class TestManager {
     }
 
     public static void displayTests() {
-        String[] tests = (String[]) testCollection.keySet().toArray();
+        String[] tests = testCollection.keySet().toArray(new String[0]);
+        Arrays.stream(tests).forEach(System.out::println);
         NetworkTablesCommunication.publishTestInfo(tests);
     }
 
@@ -61,7 +62,14 @@ public class TestManager {
         });
 
         testingThread.start();
-        System.out.println("Testing finished!");
+
+        try {
+            testingThread.join();
+            System.out.println("Testing finished!");
+            publishResults();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 

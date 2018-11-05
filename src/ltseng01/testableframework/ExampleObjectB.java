@@ -6,7 +6,7 @@ public class ExampleObjectB {
 
         TestManager.registerTest("ExampleObjectB-" + name, this::testProcedure);
 
-        TestManager.registerTest(name, () -> {
+        TestManager.registerTest("EOB-" + name, () -> {
 
             Result result = Result.PASS;
             String expected = "10";
