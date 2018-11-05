@@ -21,7 +21,7 @@ public class NetworkTablesCommunication {
         statusTable = mainTable.getSubTable("status");
         finishedTable = mainTable.getSubTable("finishedTests");
 
-        inst.startClient("localhost");
+        inst.startClient("localhost");  // No need on an actual robot
 
         mainTable.getEntry("availableTests").setStringArray(new String[]{"test1"});
         statusTable.getEntry("running").setBoolean(false);
@@ -34,17 +34,18 @@ public class NetworkTablesCommunication {
     // start or stop TestProcedures
 
     public static void publishTestInfo(String[] tests) {
-
+        mainTable.getEntry("availableTests").setStringArray(tests);
+        mainTable.getEntry("testsToRun").setStringArray(tests);
     }
 
     public static String[] receiveTestsToRun() {
-        return null;
+        return mainTable.getEntry("testsToRun").getStringArray(new String[]{});
     }
 
     public static void publishTestResult(HashMap<String, TestResult> testResults) {
-        testResults.forEach((name, testResult) -> {
-            finishedTable.getEntry(name).setStringArray(testResult.getTestResults());
-        });
+        testResults.forEach((name, testResult) -> finishedTable
+                        .getEntry(name)
+                        .setStringArray(testResult.getTestResults()));
     }
 
     public static void transmitInstructions(String instructions) {
