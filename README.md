@@ -5,7 +5,6 @@ This automated testing framework is designed for [*FIRST*® Robotics Competition
 
 ### Requirements
 Robot Side
-- WPILib
 - NetworkTables
 
 Client Side
