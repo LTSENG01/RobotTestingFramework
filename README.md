@@ -1,7 +1,7 @@
 # Robot Testing Framework
 
 ### Overview
-This testing framework is designed for FIRST® Robotics Competition robots programmed in Java. It can be adapted for any other platform as long as the dependencies are included properly.
+This automated testing framework is designed for [*FIRST*® Robotics Competition](https://firstinspires.org/) robots programmed in Java. It allows you to define a series of tests programatically, run them sequentially, and then display results in a web dashboard. It can be adapted for any other platform as long as the dependencies are included properly.
 
 ### Requirements
 Robot Side
