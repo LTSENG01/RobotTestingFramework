@@ -6,6 +6,8 @@
     <script>
         require('./app.js');
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.0/mustache.js"></script>
 </head>
 <body>
 <h1>Robot Testing Interface</h1>
@@ -28,6 +30,77 @@
 <!-- Run Tests Button -->
 <!-- Stop Tests Button -->
 
+
+
+<table style="border: 10px solid #dddddd">
+  <tr style="border: 1px solid #dddddd; text-align: left; padding: 8px;">
+    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Run?</th>
+    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Item Name</th>
+    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Pass?</th>
+    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Expected</th>
+    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Actual</th>
+    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Time</th>
+  </tr>
+  <template id="table-row-template" hidden>
+    <div>
+      {{#static}}
+      <div class="Static table row">
+          <td>Run?</td>
+          <td>log?</td>
+          <!--
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{name}}</th>
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{pass}}</th>
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Expected</th>
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{value}}</th>
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{time}}</th>
+          -->
+        <br>
+      </div>
+      {{/static}}
+    </div>
+    <div>
+      {{#dynamic}}
+        <td>Run?</td>
+        <td>log?</td>
+          <!--
+        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{name}}</th>
+        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{pass}}</th>
+        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Expected</th>
+        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{value}}</th>
+        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{time}}</th>
+        -->
+      <br>
+      {{/dynamic}}
+    </div>
+    <div>
+      {{#controls}}
+        <td>Run?</td>
+        <td>log?</td>
+          <!--
+        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{name}}</th>
+        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{pass}}</th>
+        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Expected</th>
+        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{value}}</th>
+        <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{time}}</th>
+        -->
+      <br>
+      {{/controls}}
+    </div>
+  </template>
+  <tr id="results-table">
+  </tr>
+<table>
+
+<script>
+  console.log("Ready")
+  $(document).ready(function() {
+  $.getJSON('/bin/larrytseng/testableframework/app/testdata_example.json', function(data) {
+        var template = $('#table-row-template').html();
+        console.log(template)
+        Mustache.parse(template);
+        $('#results-table').html(Mustache.render(template, data));
+    });
+});</script>
 <!-- Table
 
 |––––––+–––––––––––+––––––––+––––––––––+––––––––+––––––|
