@@ -58,6 +58,14 @@ Root
 
  */
 
+
+// test set
+let testData = {
+    "test1": ["ExampleObject", "PASS", "10", "12", "0.5sec"],
+    "test2": ["ExampleObject2", "FAIL", "3", "12", "5.5sec"],
+    "test3-notstarted": ["ExampleObject2", "DNT", "", "", ""]
+};
+
 /** ---- UI Elements ---- **/
 
 $(document).ready(() => {
