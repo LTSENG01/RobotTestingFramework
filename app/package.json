@@ -9,7 +9,7 @@
   "author": "Larry Tseng",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^7.2.4"
+    "electron": "^11.5.0"
   },
   "dependencies": {
     "jquery": "^3.5.1",
